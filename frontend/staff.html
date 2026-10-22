@@ -3,5 +3,38 @@
 <body><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">Q</span><span>Campus <b>QueueLess</b><small>STAFF PORTAL</small></span></a><a class="back-link" href="index.html">← Home</a></header>
 <main class="page-wrap"><div class="page-heading"><div class="eyebrow">STAFF WORKSPACE</div><h1>Keep the queue moving.</h1><p>Sign in and manage your service counter.</p></div>
 <section class="panel" id="loginPanel"><div class="mini-label">STAFF SIGN IN</div><h2>Welcome back</h2><form id="loginForm"><label for="username">Username</label><input id="username" required autocomplete="username" placeholder="Staff username"><label for="password">Password</label><input id="password" type="password" required autocomplete="current-password" placeholder="Password"><button class="button primary" type="submit">Sign in →</button></form><p class="tiny muted">Demo credentials are configured using environment variables on Render. Change them before sharing your site.</p><div id="loginMessage" class="message" aria-live="polite"></div></section>
-<section class="panel hidden" id="dashboard"><div class="panel-title"><div><div class="mini-label">COUNTER DASHBOARD</div><h2>Queue management</h2></div><button class="button secondary small" id="logoutBtn">Sign out</button></div><div class="toolbar"><label for="staffService">Service counter</label><select id="staffService"><option>College Office</option><option>Library</option><option>Laboratory</option><option>Canteen</option><option>Fee Counter</option><option>Principal's Office</option></select><button class="button secondary small" id="staffRefresh">Refresh</button></div><div id="staffQueue" class="queue-list"></div><div class="action-row"><button class="button primary" id="nextBtn">Call next token</button><button class="button secondary" id="completeBtn">Complete current</button></div><div id="staffMessage" class="message" aria-live="polite"></div></section>
+<section class="panel hidden" id="dashboard">
+  <div class="panel-title">
+    <div>
+      <div class="mini-label">COUNTER DASHBOARD</div>
+      <h2>Queue management</h2>
+    </div>
+    <button class="button secondary small" id="logoutBtn">Sign out</button>
+  </div>
+
+  <div class="toolbar">
+    <label for="staffService">Service counter</label>
+    <select id="staffService">
+      <option>College Office</option>
+      <option>Library</option>
+      <option>Laboratory</option>
+      <option>Canteen</option>
+      <option>Fee Counter</option>
+      <option>Principal's Office</option>
+    </select>
+    <button class="button secondary small" id="staffRefresh">Refresh</button>
+  </div>
+
+  <div id="staffQueue" class="queue-list"></div>
+
+  <div class="action-row">
+    <button class="button primary" id="nextBtn">Call next token</button>
+    <button class="button secondary" id="completeBtn">Complete current</button>
+    <button class="button secondary" id="pendingBtn">Move to Pending</button>
+    <button class="button primary" id="callAgainBtn">Call Pending Again</button>
+  </div>
+
+  <div id="staffMessage" class="message" aria-live="polite"></div>
+</section>
+
 </main><footer>© 2026 Campus QueueLess · Staff portal</footer><script src="config.js"></script><script src="staff.js"></script></body></html>
