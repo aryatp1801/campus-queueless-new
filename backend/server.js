@@ -85,4 +85,52 @@ app.post("/api/staff/complete",auth,(req,res)=>{
   res.json({token});
 });
 
+app.post("/api/staff/pending", auth, (req, res) => {
+  const service = String(req.body.service || "");
+  if (!SERVICES.includes(service)) {
+    return fail(res, 400, "Choose a valid service.");
+  }
+
+  const token = tokens.find(
+    t => t.service === service && t.status === "serving"
+  );
+
+  if (!token) {
+    return fail(res, 404, "There is no token currently being served.");
+  }
+
+  token.status = "pending";
+  token.pendingAt = new Date().toISOString();
+
+  res.json({ token, message: "Token moved to pending." });
+});
+
+app.post("/api/staff/call-again", auth, (req, res) => {
+  const service = String(req.body.service || "");
+  if (!SERVICES.includes(service)) {
+    return fail(res, 400, "Choose a valid service.");
+  }
+
+  const current = tokens.find(
+    t => t.service === service && t.status === "serving"
+  );
+
+  if (current) {
+    return fail(res, 409, "Complete or pend the current token first.");
+  }
+
+  const token = tokens.find(
+    t => t.service === service && t.status === "pending"
+  );
+
+  if (!token) {
+    return fail(res, 404, "There are no pending tokens for this service.");
+  }
+
+  token.status = "serving";
+  token.calledAt = new Date().toISOString();
+
+  res.json({ token, message: "Pending token called again." });
+});
+
 app.listen(PORT,()=>console.log(`Campus QueueLess API listening on ${PORT}`));
