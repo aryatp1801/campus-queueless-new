@@ -16,3 +16,36 @@ $("staffService").addEventListener("change",loadStaffQueue);$("staffRefresh").ad
 $("nextBtn").addEventListener("click",async()=>{try{const d=await request("/api/staff/next",{method:"POST",body:JSON.stringify({service:$("staffService").value})});msg("staffMessage",`Now calling ${d.token.tokenNumber}`);await loadStaffQueue();}catch(e){msg("staffMessage",e.message,true);}});
 $("completeBtn").addEventListener("click",async()=>{try{const d=await request("/api/staff/complete",{method:"POST",body:JSON.stringify({service:$("staffService").value})});msg("staffMessage",`Completed ${d.token.tokenNumber}`);await loadStaffQueue();}catch(e){msg("staffMessage",e.message,true);}});
 $("logoutBtn").addEventListener("click",()=>{staffToken=null;$("dashboard").classList.add("hidden");$("loginPanel").classList.remove("hidden");$("password").value="";msg("loginMessage","Signed out.");});
+// Move the currently serving token to Pending
+$("pendingBtn").addEventListener("click", async () => {
+  try {
+    const service = $("staffService").value;
+
+    const data = await request("/api/staff/pending", {
+      method: "POST",
+      body: JSON.stringify({ service })
+    });
+
+    msg("staffMessage", data.message || "Token moved to Pending.");
+    await loadStaffQueue();
+  } catch (error) {
+    msg("staffMessage", error.message, true);
+  }
+});
+
+// Call a pending token again
+$("callAgainBtn").addEventListener("click", async () => {
+  try {
+    const service = $("staffService").value;
+
+    const data = await request("/api/staff/call-again", {
+      method: "POST",
+      body: JSON.stringify({ service })
+    });
+
+    msg("staffMessage", data.message || "Pending token called again.");
+    await loadStaffQueue();
+  } catch (error) {
+    msg("staffMessage", error.message, true);
+  }
+});
